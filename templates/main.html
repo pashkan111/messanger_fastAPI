@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sample Form</title>
+</head>
+<body>
+    <input placeholder="username" value="" id='username'/>
+    <input placeholder="password" value="" id='password'/>
+    <button id='btn'>send</button>
+
+<script>
+
+    async function postData(url, data) {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data) 
+        });
+        return await response.json(); 
+      }
+
+    const username = document.getElementById('username')
+    const password = document.getElementById('password')
+    const btn = document.getElementById('btn')
+
+    btn.onclick = () => {
+        data = {
+            username: username.value, password: password.value
+        }
+        console.log(data)
+        postData('http://127.0.0.1:8089/create-token',data).then((data) => {
+            if (data.token){
+                window.location.href = 'http://127.0.0.1:8089/messanger'
+            }
+    })
+}
+
+</script>
+</body>
+</html>
